@@ -23,7 +23,7 @@ fi
 ## Find out the ARN of the exec role
 LAMBDA_EXEC_ROLE_ARN=$($AWS iam get-role --role-name $LAMBDA_EXEC_ROLE | grep "\"Arn\":" | sed -e 's/[[:space:]]*\"Arn\": \"\(.*\)\"/\1/g')
 ## Check if function already exists
-$AWS iam get-function --function-name $LAMBDA_FUNCTION_NAME > /dev/null 2>&1
+$AWS lambda get-function --function-name $LAMBDA_FUNCTION_NAME > /dev/null 2>&1
 CHK_FUNCTION_EXISTS=$(echo $?)
 if [ $CHK_FUNCTION_EXISTS -eq 255 ]; then
     ## Create function and upload JAR
