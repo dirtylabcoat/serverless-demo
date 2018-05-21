@@ -41,5 +41,4 @@ echo "Invoke Lambda function [$LAMBDA_FUNCTION_NAME] with input 10..."
 $AWS lambda invoke --invocation-type RequestResponse --function-name NthPrimeLambdaFunction --region eu-central-1 --log-type Tail --payload '{"n":10}' out.tmp
 echo "Result of invocation:"
 cat out.tmp | python -m json.tool && echo ""
-
-# Setup API Gateway
+rm out.tmp
