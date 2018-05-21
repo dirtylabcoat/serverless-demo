@@ -23,6 +23,27 @@ public class PrimerTest {
     private Primer subject;
     private Context testContext;
 
+    @Test
+    public void testFirstPrimeIs2() {
+        BigInteger n = BigInteger.valueOf(1);
+        BigInteger nth = BigInteger.valueOf(2);
+        assertEquals(subject.handleRequest(new NthPrimeRequest(n), testContext), new NthPrimeResponse(n, nth));
+    }
+
+    @Test
+    public void testTenthPrimeIs29() {
+        BigInteger n = BigInteger.valueOf(10);
+        BigInteger nth = BigInteger.valueOf(29);
+        assertEquals(subject.handleRequest(new NthPrimeRequest(n), testContext), new NthPrimeResponse(n, nth));
+    }
+
+    @Test
+    public void testHundredthPrimeIs541() {
+        BigInteger n = BigInteger.valueOf(100);
+        BigInteger nth = BigInteger.valueOf(541);
+        assertEquals(subject.handleRequest(new NthPrimeRequest(n), testContext), new NthPrimeResponse(n, nth));
+    }
+
     @Before
     public void setUp() throws Exception {
         subject = new Primer();
@@ -84,34 +105,6 @@ public class PrimerTest {
                 };
             }
         };
-    }
-
-    @Test
-    public void testFirstPrimeIs2() {
-        BigInteger n = BigInteger.valueOf(1);
-        BigInteger nth = BigInteger.valueOf(2);
-        assertEquals(subject.handleRequest(n, testContext), getExpectedResponseJson(n, nth));
-    }
-
-    @Test
-    public void testTenthPrimeIs29() {
-        BigInteger n = BigInteger.valueOf(10);
-        BigInteger nth = BigInteger.valueOf(29);
-        assertEquals(subject.handleRequest(n, testContext), getExpectedResponseJson(n, nth));
-    }
-
-    @Test
-    public void testHundredthPrimeIs541() {
-        BigInteger n = BigInteger.valueOf(100);
-        BigInteger nth = BigInteger.valueOf(541);
-        assertEquals(subject.handleRequest(n, testContext), getExpectedResponseJson(n, nth));
-    }
-
-    private String getExpectedResponseJson(BigInteger n, BigInteger nth) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("{\"n\": ").append(n).append(", ");
-        sb.append("\"nth\": ").append(nth).append("}");
-        return sb.toString();
     }
 
 }

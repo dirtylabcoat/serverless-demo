@@ -4,13 +4,13 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import java.math.BigInteger;
 
-public class Primer implements RequestHandler<BigInteger, String>{
+public class Primer implements RequestHandler<NthPrimeRequest, NthPrimeResponse>{
 
     @Override
-    public String handleRequest(BigInteger n, Context context) {
-        BigInteger nth = getNthPrime(n);
-        String response = responseJson(n, nth);
-        context.getLogger().log(response);
+    public NthPrimeResponse handleRequest(NthPrimeRequest request, Context context) {
+        BigInteger nth = getNthPrime(request.getN());
+        NthPrimeResponse response = new NthPrimeResponse(request.getN(), nth);
+        context.getLogger().log(response.toString());
         return response;
     }
 
@@ -29,13 +29,6 @@ public class Primer implements RequestHandler<BigInteger, String>{
 
     private boolean isPrime(BigInteger n) {
         return n.isProbablePrime(99);
-    }
-
-    private String responseJson(BigInteger n, BigInteger nth) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("{\"n\": ").append(n).append(", ");
-        sb.append("\"nth\": ").append(nth).append("}");
-        return sb.toString();
     }
 
 }
