@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package se.hiq.techaway.slsdemo.awsnthprime;
+package se.hiq.techaway.slsdemo.aws.nthprime;
 
+import se.hiq.techaway.slsdemo.aws.nthprime.Primer;
+import se.hiq.techaway.slsdemo.aws.nthprime.NthPrimeResponse;
+import se.hiq.techaway.slsdemo.aws.nthprime.NthPrimeRequest;
 import com.amazonaws.services.lambda.runtime.ClientContext;
 import com.amazonaws.services.lambda.runtime.CognitoIdentity;
 import com.amazonaws.services.lambda.runtime.Context;

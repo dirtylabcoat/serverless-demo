@@ -4,8 +4,7 @@ LAMBDA_EXEC_ROLE=NthPrimeLambdaExecRole
 LAMBDA_AWS_POLICY=arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
 LAMBDA_FUNCTION_NAME=NthPrimeLambdaFunction
 LAMBDA_FUNCTION_DESCRIPTION="Demo for HiQ Tech Away #3"
-JAR_FILE=target/awsnthprime.jar
-TMP_FILE=tmp.log
+JAR_FILE=target/aws-nthprime.jar
 
 # Setup IAM role for Lambda execution
 
@@ -23,14 +22,14 @@ fi
 # Upload Lambda JAR to AWS
 
 ## Find out the ARN of the exec role
-LAMBDA_EXEC_ROLE_ARN=$($AWS iam get-role --role-name $LAMBDA_EXEC_ROLE | grep "\"Arn\":" | sed -e 's/[[:space:]]*\"Arn\": \"\(.*\)\"/\1/g')
+LAMBDA_EXEC_ROLE_ARN=$($AWS iam get-role --role-name $LAMBDA_EXEC_ROLE | grep "\"Arn\":" | sed -e 's/[[:space:]]*\"Arn\": \"\(.*\)\".*/\1/g')
 ## Check if function already exists
 $AWS lambda get-function --function-name $LAMBDA_FUNCTION_NAME > /dev/null 2>&1
 CHK_FUNCTION_EXISTS=$(echo $?)
 if [ $CHK_FUNCTION_EXISTS -eq 255 ]; then
     ## Create function and upload JAR
     echo "Function [$LAMBDA_FUNCTION_NAME] doesn't exist. Attempting code upload and creation..."
-    $AWS lambda create-function --function-name $LAMBDA_FUNCTION_NAME --runtime java8 --role $LAMBDA_EXEC_ROLE_ARN --handler se.hiq.techaway.slsdemo.awsnthprime.Primer --zip-file fileb://$JAR_FILE --description "$LAMBDA_FUNCTION_DESCRIPTION"
+    $AWS lambda create-function --function-name $LAMBDA_FUNCTION_NAME --runtime java8 --role $LAMBDA_EXEC_ROLE_ARN --handler se.hiq.techaway.slsdemo.aws.nthprime.Primer --zip-file fileb://$JAR_FILE --description "$LAMBDA_FUNCTION_DESCRIPTION"
 else
     ## Update function with current JAR
     echo "Function [$LAMBDA_FUNCTION_NAME] already exists. Attempting code upload and update..."
@@ -38,9 +37,10 @@ else
 fi
 
 # Test invoke Lambda function
-
+TMP_LOG=tmp.log
 echo "Invoke Lambda function [$LAMBDA_FUNCTION_NAME] with input '{\"n\":10}'..."
 $AWS lambda invoke --invocation-type RequestResponse --function-name NthPrimeLambdaFunction --region eu-central-1 --log-type Tail --payload '{"n":10}' $TMP_LOG
 echo "Result of invocation:"
+## Pretty print result
 cat $TMP_LOG | python -m json.tool && echo ""
 rm -f $TMP_LOG

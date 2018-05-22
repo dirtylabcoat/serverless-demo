@@ -1,4 +1,4 @@
-package se.hiq.techaway.slsdemo.awsnthprime;
+package se.hiq.techaway.slsdemo.aws.nthprime;
 
 import java.math.BigInteger;
 

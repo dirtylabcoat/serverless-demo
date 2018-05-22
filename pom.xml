@@ -16,7 +16,8 @@
     </properties>
 
     <modules>
-        <module>awsnthprime</module>
+        <module>aws-nthprime</module>
+        <module>ibmcloud-nthprime</module>
     </modules>
 
 </project>

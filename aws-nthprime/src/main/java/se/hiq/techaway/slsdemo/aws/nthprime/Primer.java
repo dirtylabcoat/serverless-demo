@@ -1,4 +1,4 @@
-package se.hiq.techaway.slsdemo.awsnthprime;
+package se.hiq.techaway.slsdemo.aws.nthprime;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
